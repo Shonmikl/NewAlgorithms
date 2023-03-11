@@ -1,7 +1,11 @@
 package org.example._2023_03_11;
+
+import java.util.Queue;
+
 //O(n + k) + O(n + k) = 2n
 public class Famous {
     Famous getFamous(Famous[] persons) {
+
         Famous f = null;
         int first = 0;
         int last = persons.length - 1;
