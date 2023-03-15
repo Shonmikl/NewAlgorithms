@@ -1,7 +1,6 @@
 package org.example._2023_03_15.rbtree;
 // Red Black Tree implementation in Java
 
-
 import java.util.Random;
 
 //data structure that represents a node in the tree
@@ -12,7 +11,6 @@ class Node {
     Node right; // pointer to right child
     int color; // 1 . Red, 0 . Black
 }
-
 
 // class RedBlackTree implements the operations in Red Black Tree
 public class RedBlackTree {
@@ -110,7 +108,6 @@ public class RedBlackTree {
                         leftRotate(s);
                         s = x.parent.left;
                     }
-
                     // case 3.4
                     s.color = x.parent.color;
                     x.parent.color = 0;
@@ -122,7 +119,6 @@ public class RedBlackTree {
         }
         x.color = 0;
     }
-
 
     private void rbTransplant(Node u, Node v) {
         if (u.parent == null) {
@@ -337,7 +333,6 @@ public class RedBlackTree {
             x = y;
             y = y.parent;
         }
-
         return y;
     }
 
@@ -423,7 +418,6 @@ public class RedBlackTree {
         if (node.parent.parent == null) {
             return;
         }
-
         // Fix the tree
         fixInsert(node);
     }
@@ -447,7 +441,7 @@ public class RedBlackTree {
         for (int i = 0; i < 25; i++) {
             bst.insert(new Random().nextInt(100));
         }
-//        bst.deleteNode(25);
+//      bst.deleteNode(25);
         bst.print();
     }
 }
