@@ -34,11 +34,9 @@ public class Node {
         if (!isNodeExist(node)) {
             return null;
         }
-
         if (!isNodeExist(node.left)) {
             return node;
         }
-
         return getMin(node.left);
     }
 
@@ -65,7 +63,6 @@ public class Node {
     private static void postOrderTraversal(Node node) {
 
     }
-
 
     public static void main(String[] args) {
         Integer[] digit = {9, 2, 5, 13, 6, 10, 14, 7, 33};
