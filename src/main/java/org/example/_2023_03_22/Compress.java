@@ -7,19 +7,54 @@ import java.util.TreeMap;
 public class Compress {
     public static void main(String[] args) {
         String text = """
-                A team of researchers led by Cambridge University 
+                A team of researchers led by Cambridge University
                 analysed five locks of hair to sequence the composer's genome.
                 They were, however, unable to establish a definitive cause of his hearing loss.
 
-                Lead author, Tristan Begg, said genetic risk factors, coupled with 
+                Lead author, Tristan Begg, said genetic risk factors, coupled with
                 Beethoven's high alcohol consumption, may have contributed to his liver condition.
 
-                The international team analysed strands from eight locks of hair kept 
+                The international team analysed strands from eight locks of hair kept
                 in public and private collections, in a bid to shed light on Beethoven's health problems.
 
                 Five locks were deemed "authentic" by the researchers and came from a single European male.""";
 
         String milk = "MOLOKO";
+
+        //Считаем кол-во символов
+        TreeMap<Character, Integer> freq = countChar(milk);
+
+        //Генерируем список узлов дерева
+        ArrayList<CodeTreeNode> codeTreeNodes = new ArrayList<>();
+        for (Character c : freq.keySet()) {
+            codeTreeNodes.add(new CodeTreeNode(c, freq.get(c)));
+        }
+
+        //Строим кодовое дерево
+        CodeTreeNode tree = getHuff(codeTreeNodes);
+
+        //Генерируем таблицу кодов для наших символов
+        TreeMap<Character, String> codes = new TreeMap<>();
+        for (Character c : freq.keySet()) {
+            codes.put(c, tree.getCodeForChar(c, ""));
+        }
+
+        //Наши коды
+        System.out.println("Code table: " + codes);
+
+        //Кодируем текст заменяя символы соответствующими кодами
+        StringBuilder encoded = new StringBuilder();
+        for (int i = 0; i < milk.length(); i++) {
+            encoded.append(codes.get(milk.charAt(i)));
+        }
+
+        System.out.println("Text size: " + milk.getBytes().length * 8 + " BIT");
+        System.out.println("Compressed text size: " + encoded.length() + " BIT");
+        System.out.println("Compressed text bits: " + encoded);
+
+        //Раскодируем
+        String decoded = getDecode(encoded.toString(), tree);
+        System.out.println("Decoded text: " + decoded);
     }
 
     //1. Считаем сколько раз каждый символ встречается в тексте
@@ -101,7 +136,7 @@ public class Compress {
         CodeTreeNode node = tree;
         for (int i = 0; i < encoded.length(); i++) {
             node = encoded.charAt(i) == '0' ? node.left : node.right;
-            if(node.content != null) {
+            if (node.content != null) {
                 decoded.append(node.content);
                 node = tree;
             }
