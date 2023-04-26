@@ -68,11 +68,63 @@ public class Task33 {
        return result;
     }
 
+    /**
+     * [10 5 2 6 8 3] k==100
+     */
+//    private static int getSubArrays(int[] nums, int k) {
+//
+//    }
+
+    //todo ошибка
+    public static List<List<Integer>> methodVladislav(int[] arr, int max) {
+        List<List<Integer>> res = new ArrayList<>();
+
+        for (int i = 0; i < arr.length; i++) {
+            int x = arr[i];
+            List<Integer> l1 = new ArrayList<>();
+
+            for (int j = i; j < arr.length; j++) {
+                if (x < max) {
+                    l1.add(arr[j]);
+                    List<Integer> l2 = new ArrayList<>(l1);
+                    res.add(l2);
+                    if (arr.length > j + 1) {
+                        x *= arr[j + 1];
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
+    //todo ошибка
+    private static int subArrM(int[] nums, int k) {
+        if (k <= 1) return 0;
+
+        int prod = 1;
+        int result = 0;
+        int left = 0;
+        int right = 0;
+
+        while (right < nums.length) {
+            prod *= nums[right];
+
+            while (prod >= k) {
+                prod /= nums[left];
+                left++;
+            }
+            result = right - left + 1;
+            right++;
+        }
+        return result;
+    }
+
+
     public static void main(String[] args) {
-        int[] k = {2,4};
-        int[][] q = {{2,1}, {2,7}, {6,4}, {7,7}, {2,5}, {4,6}};
-        int[][] q1 = {{2,7}};
-        System.out.println(kings(q, k));
+//        int[] k = {2,4};
+//        int[][] q = {{2,1}, {2,7}, {6,4}, {7,7}, {2,5}, {4,6}};
+//        int[][] q1 = {{2,7}};
+//        System.out.println(kings(q, k));
 //        ListNode l1 = new ListNode(1);
 //        ListNode l3 = new ListNode(3);
 //        ListNode l5 = new ListNode(5);
@@ -88,6 +140,12 @@ public class Task33 {
 //        l4.next = l6;
 //
 //        System.out.println(getSortedList(l1, l2));
+        int[] arr = {1, 1, 1, 1, 10, 5, 2, 6, 4, 8};
+        int k = 100;
+
+        System.out.println(methodVladislav(arr, k));
+        System.out.println("*****************************");
+        System.out.println(subArrM(arr, k));
     }
 }
 
